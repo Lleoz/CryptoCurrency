@@ -1,6 +1,8 @@
 # Crypto Currency App
 CryptoTracker is a mobile app that allows users to track the prices of various cryptocurrencies in real-time, as well as view historical price data. The app is available for both iOS and Android devices.
 
+Live: [https://crypto-currency-leozz.vercel.app](https://crypto-currency-leozz.vercel.app)
+
 ## Features
 * Real-time price tracking for top cryptocurrencies by market cap
 * Historical price data for day, week, month, and year
