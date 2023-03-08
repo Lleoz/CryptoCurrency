@@ -5,6 +5,7 @@ import { CoinList } from '../config/api'
 import { Container, TextField, TableContainer, LinearProgress, TableHead, TableRow, TableCell, Table, TableBody,
 FormControl, InputLabel, Select, MenuItem, Box, Pagination } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { CryptoState } from '../CryptoContext'
 
 const CoinsTable = () => {
 
@@ -16,6 +17,8 @@ const CoinsTable = () => {
     const [currency, setCurrency] = useState('CAD')
     const [page, setPage] = useState(1)
     const [resultPage, setresultPage] = useState(10)
+
+    const { fav, setFav} = CryptoState;
     
     const navigate = useNavigate();
     

@@ -6,6 +6,9 @@ import CoinInfo from '../components/CoinInfo';
 import { SingleCoin } from "../config/api"
 import ReactHtmlParser from "react-html-parser";
 import { Box } from '@mui/system';
+import { CryptoState } from '../CryptoContext';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const CoinsPage = () => {
     
@@ -15,15 +18,29 @@ const CoinsPage = () => {
     
     const { id } = useParams()
     const [coin, setCoin] = useState();
+
+    const { fav, setFav } = CryptoState();
     
     const fetchCoins = async() => {
         const { data } = await axios.get(SingleCoin(id))
         setCoin(data);
     }
+
+    const addNewFav = (name) => {
+        console.log("Tratando de agragar fav")
+        if(fav.includes(name)){
+            setFav(fav.filter( item => item !== name));
+        } else {
+            setFav([name, ...fav]) ;
+        }
+    }
+
+    const existFav = ( name ) => {
+        return fav.includes(name);
+    }
     
     useEffect(() => {
         fetchCoins();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
@@ -34,8 +51,6 @@ const CoinsPage = () => {
             gridAutoColumns: '1fr',
             gap: 1}}
         >
-
-
         <Box sx = {{
             gridRow: '1', 
             gridColumn: '1/3', 
@@ -55,6 +70,22 @@ const CoinsPage = () => {
             fontWeight: "bold"
         }}>
         {coin?.name}
+
+        {
+            (existFav(coin.name)) ? (
+                <FavoriteIcon sx = {{
+                    color: "red",
+                    fontSize: 32,
+                }} onClick={ () => addNewFav(coin.name)}></FavoriteIcon>
+            ) : (
+                <FavoriteBorderIcon sx = {{
+                    color: "red",
+                    fontSize: 32,
+                }} onClick={ () => addNewFav(coin.name)}></FavoriteBorderIcon>
+            )
+
+        }
+
         </Typography>
         <Typography variant="subtitle1" sx={{
             width: 1,
@@ -114,25 +145,21 @@ const CoinsPage = () => {
                 M
             </Typography>
         </span>
-    </div>
-                
-                
-    </Box>
-    <Box sx = {{
-            gridRow: '1', 
-            gridColumn: 'span 2' ,
-            display:"grid",
-            alignItems: "center",
-            marginTop: 5,
-            borderRight: "2px solid grey"
-        }}>
-        <CoinInfo coin={coin}></CoinInfo>
-    </Box>
-                
-
-                
-    </Box>
-                )
-            }
+        </div>
+                    
+                    
+        </Box>
+        <Box sx = {{
+                gridRow: '1', 
+                gridColumn: 'span 2' ,
+                display:"grid",
+                alignItems: "center",
+                marginTop: 5,
+                borderRight: "2px solid grey"
+            }}>
+            <CoinInfo coin={coin} ></CoinInfo>
+        </Box>
+        </Box>
+        )}
             
-            export default CoinsPage
+    export default CoinsPage

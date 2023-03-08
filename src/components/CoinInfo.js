@@ -9,18 +9,15 @@ import { chartDays } from "../config/data";
 import Chart from 'chart.js/auto';
 
 const CoinInfo = ({ coin }) => {
-  //console.log(coin)
   const [historicData, setHistoricData] = useState();
   const [days, setDays] = useState(1);
   const [flag,setflag] = useState(false);
 
   const fetchHistoricData = async () => {
     const { data } = await axios.get(HistoricalChart(coin.id, days));
-    console.log(data.prices)
     setflag(true);
     setHistoricData(data.prices);
   };
-
   
   useEffect(() => {
     fetchHistoricData();
